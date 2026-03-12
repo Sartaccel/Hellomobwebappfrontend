@@ -1,0 +1,27 @@
+.header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:20px 80px;
+  background:linear-gradient(120deg,#0b2a4a,#375a9e);
+  color:white;
+}
+
+.search{
+  width:400px;
+  padding:10px 20px;
+  border-radius:20px;
+  border:none;
+}
+
+.menu-right{
+  display:flex;
+  gap:15px;
+  align-items:center;
+}
+
+.icon{
+  display:flex;
+  align-items:center;
+  gap:5px;
+}

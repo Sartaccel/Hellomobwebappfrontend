@@ -1,0 +1,44 @@
+.navbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:25px 100px;
+  font-family:'Inria Serif', serif;
+}
+
+.navbar-brand{
+  display:flex;
+  flex-direction:column;
+}
+
+.brand-link{
+  display:flex;
+  flex-direction:column;
+}
+
+.navbar-links{
+  display:flex;
+  gap:45px;
+}
+
+.nav-link{
+  font-size:18px;
+}
+
+.navbar-auth{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.divider{
+  width:1px;
+  height:18px;
+  background:white;
+}
+
+.auth-link{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}

@@ -1,0 +1,193 @@
+/* Login.css */
+
+.login-page {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #1c365d;
+  overflow: hidden;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Background Artwork */
+.bg-shape {
+  position: absolute;
+  z-index: 0;
+}
+
+/* Large wave on top right */
+.shape-top-right {
+  top: -30vh;
+  right: -10vw;
+  width: 80vw;
+  height: 140vh;
+  background-color: #152b4d;
+  border-radius: 40% 50% 60% 30% / 40% 50% 60% 50%;
+  transform: rotate(-10deg);
+}
+
+/* Bottom left overlapping concentric waves */
+.shape-bottom-left-1 {
+  bottom: -25vh;
+  left: -20vw;
+  width: 70vh;
+  height: 70vh;
+  background-color: #2b568e;
+  border-radius: 50%;
+}
+
+.shape-bottom-left-2 {
+  bottom: -20vh;
+  left: -15vw;
+  width: 50vh;
+  height: 50vh;
+  background-color: #214371;
+  border-radius: 50%;
+}
+
+.shape-bottom-left-3 {
+  bottom: -15vh;
+  left: -10vw;
+  width: 30vh;
+  height: 30vh;
+  background-color: #2b568e;
+  border-radius: 50%;
+}
+
+/* Form Container */
+.login-content {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 360px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+  color: white;
+}
+
+.login-header h1 {
+  font-size: 3.8rem;
+  font-weight: 600;
+  margin: 0;
+  letter-spacing: -1.5px;
+  line-height: 1.1;
+}
+
+.login-header p {
+  font-size: 0.85rem;
+  font-weight: 300;
+  letter-spacing: 1px;
+  margin-top: 5px;
+  color: #a4bde2;
+  text-transform: uppercase;
+}
+
+/* Inputs */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  width: 100%;
+}
+
+.input-container {
+  position: relative;
+  width: 100%;
+}
+
+.input-container input {
+  width: 100%;
+  padding: 12px 12px 12px 40px; /* space for icon */
+  border: 1px solid rgba(255,255,255,0.8);
+  border-radius: 4px;
+  background: transparent;
+  color: white;
+  outline: none;
+  font-size: 14px;
+}
+
+.input-container:focus-within {
+  border-color: #fff;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.input-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: white;
+  font-size: 16px;
+  opacity: 0.9;
+}
+
+.input-container input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: white;
+  font-size: 0.95rem;
+  flex: 1;
+}
+
+.input-container input::placeholder {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+}
+
+/* Button */
+.login-btn {
+  background: white;
+  color: #1e3a62;
+  border: none;
+  border-radius: 4px;
+  padding: 1rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.login-btn:hover {
+  background: #f8f9fa;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.login-btn:active {
+  transform: translateY(1px);
+}
+
+/* Forgot Password */
+.forgot-password-container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0.8rem;
+}
+
+.forgot-password {
+  color: white;
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 400;
+  transition: opacity 0.2s ease;
+  letter-spacing: 0.3px;
+}
+
+.forgot-password:hover {
+  opacity: 0.8;
+}

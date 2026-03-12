@@ -1,0 +1,68 @@
+.home{
+  min-height:100vh;
+}
+
+.hero{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:80px 100px;
+}
+
+.hero-left{
+  max-width:500px;
+}
+
+.hero-left h1{
+  font-family:'Instrument Sans', sans-serif;
+  font-size:60px;
+  font-weight:700;
+}
+
+.hero-left span{
+  font-weight:700;
+}
+
+.hero-left h3{
+  font-family:'Inknut Antiqua', serif;
+  font-size:22px;
+  margin-top:20px;
+}
+
+.hero-left p{
+  font-family:'Inika', serif;
+  margin-top:15px;
+  font-size:18px;
+  line-height:1.6;
+  color:#d6e1ef;
+}
+
+.hero-buttons{
+  margin-top:30px;
+  display:flex;
+  gap:20px;
+}
+
+.btn-primary{
+  background:#4cc4c4;
+  color:#002b4f;
+  padding:14px 26px;
+  border:none;
+  border-radius:12px;
+  font-size:16px;
+  cursor:pointer;
+}
+
+.btn-secondary{
+  background:#4cc4c4;
+  color:#002b4f;
+  padding:14px 26px;
+  border:none;
+  border-radius:12px;
+  font-size:16px;
+  cursor:pointer;
+}
+
+.hero-right img{
+  width:550px;
+}

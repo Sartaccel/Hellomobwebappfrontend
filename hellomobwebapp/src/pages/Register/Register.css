@@ -1,0 +1,315 @@
+.create-account-container {
+  position: relative;
+  min-height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background-color: #121f3d;
+}
+
+.bg-shape {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.shape-1 {
+  width: 150vw;
+  height: 150vw;
+  background: radial-gradient(circle, #1a2f5c 0%, rgba(26, 47, 92, 0) 70%);
+  top: -50vw;
+  left: -50vw;
+  opacity: 0.8;
+}
+
+.shape-2 {
+  width: 80vw;
+  height: 80vw;
+  background: #203f75;
+  top: -30vw;
+  right: -20vw;
+  border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+  transform: rotate(45deg);
+  opacity: 0.7;
+}
+
+.shape-3 {
+  width: 100vw;
+  height: 100vw;
+  background: #153266;
+  bottom: -40vw;
+  left: -20vw;
+  border-radius: 60% 40% 30% 70% / 50% 30% 70% 50%;
+  transform: rotate(-15deg);
+  opacity: 0.8;
+}
+
+.shape-4 {
+  width: 70vw;
+  height: 70vw;
+  background: #1b2f5c;
+  bottom: -20vw;
+  right: -30vw;
+  border-radius: 50%;
+  opacity: 0.6;
+}
+
+.brand-header {
+  position: absolute;
+  top: 40px;
+  left: 50px;
+  z-index: 10;
+  color: white;
+}
+
+.brand-header h1 {
+  margin: 0;
+  font-size: 48px;
+  font-weight: 600;
+  letter-spacing: -1px;
+}
+
+.brand-header p {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 300;
+  letter-spacing: 2px;
+  color: #aeb9cc;
+}
+
+.form-wrapper {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 500px;
+  padding: 40px;
+  border-radius: 12px;
+}
+
+.form-wrapper h2 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 30px;
+  color: white;
+}
+
+.account-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-row {
+  display: flex;
+  gap: 20px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 8px;
+}
+
+.input-group label {
+  font-size: 13px;
+  color: #c9d3e8;
+  font-weight: 400;
+}
+
+.input-group input {
+  padding: 12px 14px;
+  background-color: rgba(30, 43, 77, 0.6);
+  border: 1px solid #3b507d;
+  border-radius: 6px;
+  color: white;
+  font-family: inherit;
+  font-size: 14px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+}
+
+.input-group input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+.input-group input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.input-with-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-with-icon input {
+  width: 100%;
+  padding-right: 40px;
+}
+
+.input-icon {
+  position: absolute;
+  right: 12px;
+  color: #5c74a0;
+  font-size: 18px;
+}
+
+.form-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: #aeb9cc;
+  margin-top: -5px;
+}
+
+.form-options.terms {
+  justify-content: flex-start;
+  margin-bottom: 10px;
+}
+
+.form-options a {
+  color: #3b82f6;
+  font-weight: 500;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+  padding-left: 24px;
+}
+
+.checkbox-label input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  height: 16px;
+  width: 16px;
+  background-color: transparent;
+  border: 1px solid #c9d3e8;
+  border-radius: 3px;
+  transition: all 0.2s;
+}
+
+.checkbox-label:hover input ~ .checkmark {
+  border-color: #3b82f6;
+}
+
+.checkbox-label input:checked ~ .checkmark {
+  background-color: #3b82f6;
+  border-color: #3b82f6;
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.checkbox-label input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.checkbox-label .checkmark:after {
+  left: 5px;
+  top: 1px;
+  width: 4px;
+  height: 8px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.action-buttons button {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+
+.btn-primary {
+  background-color: #1a7afa; 
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #0e6bed;
+}
+
+.btn-secondary {
+  background-color: white;
+  color: #d84b37; 
+  color: #ea4335; 
+  font-weight: 600;
+}
+
+.btn-secondary:hover {
+  background-color: #f7f7f7;
+}
+
+.google-icon {
+  font-size: 18px;
+}
+
+.login-prompt {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 13px;
+  color: #aeb9cc;
+}
+
+.login-prompt a {
+  color: #3b82f6;
+  font-weight: 500;
+}
+
+@media (max-width: 600px) {
+  .form-row {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+  }
+  
+  .brand-header {
+    position: relative;
+    top: 0;
+    left: 0;
+    text-align: center;
+    margin-top: 40px;
+  }
+}
