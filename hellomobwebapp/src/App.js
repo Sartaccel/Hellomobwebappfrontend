@@ -6,6 +6,7 @@ import Login from "./pages/Login/Login";
 import Hero from "./components/Hero/Hero"
 import OtpVerification from "./pages/OtpVerification/OtpVerification";
 import CategoryProduct from "./pages/CategoryProduct/CategoryProduct";
+import Wishlist from "./components/Wishlist/Wishlist";
 
 function App() {
   return (
@@ -14,10 +15,11 @@ function App() {
         <Routes>
           <Route path="/" element={<Hero />} />
           <Route path="/verify-otp" element={<OtpVerification />} />
-          <Route path="/Home" element={<Home />} />
+          <Route path="/home" element={<Home />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
-           <Route path="/category/:category" element={<CategoryProduct />} />
+          <Route path="/category/:category" element={<CategoryProduct />} />
+          <Route path="/wishlist" element={<Wishlist/>}/>
         </Routes>
     </Router>
 

@@ -1,32 +1,40 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { FaUserCircle } from 'react-icons/fa';
-import './Navbar.css';
+import { useState } from "react";
+import { FaUserCircle, FaBars, FaTimes } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import "./Navbar.css";
+import logo from "../../assets/logo.png";
 
 const Navbar = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
     <nav className="navbar">
+
       <div className="navbar-brand">
         <Link to="/" className="brand-link">
-          <span className="brand-text-top">Hello</span>
-          <span className="brand-text-bottom">Futurestore</span>
+          <img src={logo} alt="Hello Futurestore Logo" className="brand-logo" />
         </Link>
       </div>
-      
-      <div className="navbar-links">
-        <Link to="/" className="nav-link">Home</Link>
-        <Link to="/about" className="nav-link">About Us</Link>
-        <Link to="/products" className="nav-link">Our Products</Link>
+
+      {/* Toggle Button */}
+      <div className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)}>
+        {menuOpen ? <FaTimes size={22}/> : <FaBars size={22}/>}
+      </div>
+
+      {/* Links */}
+      <div className={`navbar-links ${menuOpen ? "active" : ""}`}>
+        <Link to="/Home" className="nav-link">Home</Link>
+        <Link to="/category/:category" className="nav-link">Our Products</Link>
         <Link to="/contact" className="nav-link">Contact Us</Link>
+
+        <div className="navbar-auth">
+          <Link to="/register" className="auth-link">
+            <FaUserCircle size={22}/>
+            <span>Sign Up / Sign In</span>
+          </Link>
+        </div>
       </div>
-      
-      <div className="navbar-auth">
-        <div className="divider"></div>
-        <Link to="/register" className="auth-link">
-          <FaUserCircle size={24} />
-          <span>Sign Up/Sign In</span>
-        </Link>
-      </div>
+
     </nav>
   );
 };

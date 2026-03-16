@@ -1,68 +1,138 @@
+/* =========================
+   HOME
+========================= */
+
 .home{
   min-height:100vh;
 }
+
+
+/* =========================
+   HERO CONTAINER
+========================= */
 
 .hero{
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:80px 100px;
+
+  padding:clamp(40px,8vw,80px) clamp(20px,6vw,100px);
+  gap:40px;
+  flex-wrap:wrap;
 }
 
+
+/* =========================
+   HERO LEFT
+========================= */
+
 .hero-left{
-  max-width:500px;
+  max-width:520px;
+  flex:1;
 }
 
 .hero-left h1{
-  font-family:'Instrument Sans', sans-serif;
-  font-size:60px;
+  font-size:clamp(32px,4vw,60px);
   font-weight:700;
+  line-height:1.2;
 }
 
 .hero-left span{
-  font-weight:700;
+  font-weight:800;
 }
 
 .hero-left h3{
-  font-family:'Inknut Antiqua', serif;
-  font-size:22px;
-  margin-top:20px;
+  font-size:clamp(16px,1.6vw,22px);
+  margin-top:18px;
 }
 
 .hero-left p{
-  font-family:'Inika', serif;
   margin-top:15px;
-  font-size:18px;
+  font-size:clamp(14px,1.2vw,18px);
   line-height:1.6;
   color:#d6e1ef;
+  font-weight: lighter;
+
 }
+
+
+/* =========================
+   BUTTONS
+========================= */
 
 .hero-buttons{
   margin-top:30px;
   display:flex;
   gap:20px;
+  flex-wrap:wrap;
 }
 
 .btn-primary{
   background:#4cc4c4;
   color:#002b4f;
-  padding:14px 26px;
-  border:none;
-  border-radius:12px;
-  font-size:16px;
+
+  padding:clamp(10px,1.2vw,14px) clamp(18px,2vw,26px);
+
+  border:1px solid white;
+  border-radius:25px;
+
+  font-size:clamp(14px,1.1vw,16px);
+
   cursor:pointer;
+  transition:0.25s;
 }
 
-.btn-secondary{
-  background:#4cc4c4;
-  color:#002b4f;
-  padding:14px 26px;
-  border:none;
-  border-radius:12px;
-  font-size:16px;
-  cursor:pointer;
+.btn-primary:hover{
+  transform:translateY(-2px);
+  background-color: #d6e1ef;
+  border:1px solid #4cc4c4;
+
+}
+
+
+/* =========================
+   HERO RIGHT IMAGE
+========================= */
+
+.hero-right{
+  flex:1;
+  display:flex;
+  justify-content:center;
 }
 
 .hero-right img{
-  width:550px;
+  width:clamp(260px,40vw,550px);
+  height:auto;
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width:1024px){
+
+  .hero{
+    padding:60px 40px;
+  }
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width:768px){
+
+  .hero{
+    flex-direction:column;
+    text-align:center;
+    padding:50px 25px;
+  }
+
+  .hero-buttons{
+    justify-content:center;
+  }
+
 }
