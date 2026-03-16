@@ -1,27 +1,155 @@
+/* HEADER BACKGROUND */
+
 .header{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:20px 80px;
   background:linear-gradient(120deg,#0b2a4a,#375a9e);
   color:white;
 }
 
-.search{
-  width:400px;
-  padding:10px 20px;
-  border-radius:20px;
-  border:none;
+/* CONTAINER */
+
+.header-container{
+  max-width:1400px;
+  margin:auto;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  padding:18px 20px;
+  gap:20px;
 }
+
+/* LOGO */
+
+.logo img{
+  width:160px;
+}
+
+/* SEARCH */
+
+.search-box{
+  display:flex;
+  align-items:center;
+
+  background:white;
+  border-radius:25px;
+
+  padding:8px 14px;
+
+  flex:1;
+  max-width:420px;
+}
+
+.search-box input{
+  border:none;
+  outline:none;
+  width:100%;
+  font-size:14px;
+  padding-left:6px;
+}
+
+.search-icon{
+  color:#777;
+}
+
+/* MENU */
 
 .menu-right{
   display:flex;
-  gap:15px;
   align-items:center;
+  gap:15px;
 }
 
 .icon{
   display:flex;
   align-items:center;
   gap:5px;
+  cursor:pointer;
+}
+
+.divider{
+  opacity:0.6;
+}
+
+/* PROFILE */
+
+.profile-avatar{
+  width:32px;
+  height:32px;
+
+  border-radius:50%;
+  background:#4cc4c4;
+  color:#002b4f;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  font-weight:600;
+}
+
+/* MOBILE NAV */
+
+.mobile-nav{
+  display:none;
+}
+
+
+/* ================= MOBILE ================= */
+
+/* ================= MOBILE ================= */
+
+@media (max-width:600px){
+
+  .menu-right{
+    display:none;
+  }
+
+  /* keep logo + search in same row */
+  .header-container{
+    flex-direction:row;
+    align-items:center;
+    gap:10px;
+    
+  }
+
+  /* smaller logo */
+  .logo img{
+    width:90px;
+  }
+
+  /* search takes remaining space */
+  .search-box{
+    flex:1;
+    max-width:100%;
+    padding:6px 12px;
+  }
+
+  /* bottom navigation */
+
+  .mobile-nav{
+    position:fixed;
+    bottom:0;
+    left:0;
+    right:0;
+
+    height:60px;
+
+    background:white;
+
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+
+    box-shadow:0 -3px 10px rgba(0,0,0,0.1);
+
+    color:#0b2a4a;
+    z-index: 1000;
+  }
+
+  .mobile-icon{
+    font-size:20px;
+    cursor:pointer;
+  }
+
 }
