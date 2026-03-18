@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./CategoryProduct.css";
 import { FiHeart } from "react-icons/fi";
 import { FaHeart } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import CategoryNav from "../../components/CategoryNav/CategoryNav";
 import Header from "../../components/Header/Header";
@@ -58,6 +59,7 @@ const dummyProducts = [
 ];
 
 const CategoryProduct = () => {
+  const navigate = useNavigate();
   const { category } = useParams();
   const [products, setProducts] = useState([]);
   const [wishlist, setWishlist] = useState([]);
@@ -74,7 +76,7 @@ const CategoryProduct = () => {
       setProducts(dummyProducts);
     } else {
       const filteredProducts = dummyProducts.filter(
-        (product) => product.category === category
+        (product) => product.category === category,
       );
       setProducts(filteredProducts);
     }
@@ -115,28 +117,32 @@ const CategoryProduct = () => {
           {products.length > 0 ? (
             products.map((product) => {
               const isWishlisted = wishlist.some(
-                (item) => item.id === product.id
+                (item) => item.id === product.id,
               );
 
               return (
-                <div className="product-card" key={product.id}>
+                <div
+                  className="product-card"
+                  key={product.id}
+                  onClick={() =>
+                    navigate(`/product/${product.id}`, { state: product })
+                  }
+                >
+                  {" "}
                   <div
                     className="wishlist"
-                    onClick={() => toggleWishlist(product)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      toggleWishlist(product);
+                    }}
                   >
-                    {isWishlisted ? (
-                      <FaHeart color="red" />
-                    ) : (
-                      <FiHeart />
-                    )}
+                    {isWishlisted ? <FaHeart color="red" /> : <FiHeart />}
                   </div>
-
                   <img
                     src={product.imageUrl}
                     alt={product.name}
                     className="product-image"
                   />
-
                   <div className="product-info">
                     <h4>{product.name}</h4>
                     <p>{product.price}</p>

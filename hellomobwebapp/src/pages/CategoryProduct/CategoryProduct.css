@@ -1,9 +1,11 @@
+/* ================= CONTAINER ================= */
 
 .category-container{
   min-height:100vh;
 
   max-width:1600px;
   margin:auto;
+  padding-bottom:50px;
 
   padding:clamp(30px,5vw,60px) clamp(16px,6vw,80px);
 
@@ -14,35 +16,36 @@
     #3d63a3 100%
   );
 }
+
 /* ================= GRID ================= */
 
 .product-grid{
   display:grid;
 
-  grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
-
-  gap:clamp(20px,4vw,60px);
+  gap:clamp(20px,4vw,40px);
 
   max-width:1400px;
   margin:auto;
+
+  /* ✅ Large screen (5 cards) */
+  grid-template-columns: repeat(5, 1fr);
 }
 
 /* ================= CARD ================= */
 
 .product-card{
-
   width:100%;
   max-width:260px;
 
   margin:auto;
 
-  height:clamp(280px,38vw,330px);
+  height:auto; /* responsive height */
 
   border-radius:26px;
 
   position:relative;
 
-  padding:clamp(18px,3vw,30px) clamp(12px,3vw,20px) 20px;
+  padding:clamp(16px,3vw,26px) clamp(12px,3vw,20px) 16px;
 
   display:flex;
   flex-direction:column;
@@ -62,24 +65,45 @@
     0 10px 30px rgba(0,0,0,0.35),
     inset 0 1px 0 rgba(255,255,255,0.15);
 }
+
 .product-card:hover{
   transform:translateY(-8px);
 }
+
+/* ================= HEART ================= */
 
 .wishlist{
   position:absolute;
   top:18px;
   right:20px;
+
   color:rgba(255,255,255,0.9);
   font-size:22px;
+
   cursor:pointer;
 }
 
+/* ================= IMAGE ================= */
 
+.product-image{
+  width:clamp(100px,14vw,170px);
+  height:clamp(100px,14vw,170px);
+
+  object-fit:cover;
+
+  margin:10px;
+
+  border-radius:16px;
+
+  filter: drop-shadow(0 10px 12px rgba(0,0,0,0.45));
+}
+
+/* ================= INFO ================= */
 
 .product-info{
   width:100%;
   text-align:center;
+
   border-top:1px solid rgba(255,255,255,0.25);
   padding-top:14px;
 }
@@ -87,27 +111,16 @@
 .product-info h4{
   color:white;
   font-weight:500;
-  font-size:16px;
+  font-size:clamp(14px,2vw,16px);
   margin-bottom:6px;
 }
 
 .product-info p{
   color:white;
-  font-size:15px;
+  font-size:clamp(13px,2vw,15px);
 }
-.product-image{
-  width:170px;
-  height:170px;
 
-  object-fit:cover;
-
-  margin:10px;
-
-  border-radius:16px;   /* rounded corners */
-
-  filter: drop-shadow(0 10px 12px rgba(0,0,0,0.45));
-}
-/* ================= CATEGORY TITLE ================= */
+/* ================= TITLE ================= */
 
 .category-title{
   color:white;
@@ -121,137 +134,122 @@
   letter-spacing:1px;
 }
 
-/* ================= EMPTY MESSAGE ================= */
+/* ================= EMPTY ================= */
 
 .no-products{
-  width:100%;
+  grid-column:1 / -1;
   text-align:center;
 
   color:white;
-
   font-size:clamp(16px,2.5vw,20px);
 
   margin-top:80px;
 }
 
-/* ================= MOBILE ================= */
+/* ================= BREAKPOINTS ================= */
 
+/* 4 cards */
+@media (max-width:1400px){
+  .product-grid{
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* 3 cards */
+@media (max-width:1000px){
+  .product-grid{
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* 2 cards (mobile) */
 @media (max-width:600px){
 
-.category-container{
-  padding:30px 16px;
+  .category-container{
+    padding:30px 16px;
+    padding-bottom:100px;
+
+  }
+
+  .product-grid{
+    grid-template-columns: repeat(2, 1fr);
+    gap:20px;
+  }
+
+  .product-card{
+    padding:18px 12px;
+    border-radius:18px;
+  }
+
+  .product-image{
+    width:120px;
+    height:120px;
+  }
+
+  .wishlist{
+    top:10px;
+    right:10px;
+    font-size:18px;
+  }
+
+  .product-info h4{
+    font-size:14px;
+  }
+
+  .product-info p{
+    font-size:13px;
+  }
+
+  .category-title{
+    font-size:20px;
+    margin-bottom:24px;
+  }
+
+  .no-products{
+    margin-top:40px;
+    font-size:16px;
+  }
 }
 
-/* grid becomes 2 columns */
-
-.product-grid{
-  grid-template-columns:repeat(2,1fr);
-  gap:20px;
-}
-
-/* smaller cards */
-
-.product-card{
-  max-width:100%;
-  height:auto;
-  padding:18px 12px;
-  border-radius:18px;
-}
-
-/* smaller image */
-
-.product-image{
-  width:120px;
-  height:120px;
-  border-radius:12px;
-}
-
-/* wishlist icon */
-
-.wishlist{
-  top:10px;
-  right:10px;
-  font-size:18px;
-}
-
-/* product text */
-
-.product-info h4{
-  font-size:14px;
-}
-
-.product-info p{
-  font-size:13px;
-}
-
-/* category title */
-
-.category-title{
-  font-size:20px;
-  margin-bottom:24px;
-}
-
-/* no products text */
-
-.no-products{
-  margin-top:40px;
-  font-size:16px;
-}
-
-}
-
-/* ================= SMALL MOBILE (400px) ================= */
-
+/* small mobile */
 @media (max-width:400px){
 
-.category-container{
-  padding:20px 12px;
-}
+  .category-container{
+    padding:20px 12px;
+    padding-bottom:70px;
 
-/* grid still 2 columns but tighter */
+  }
 
-.product-grid{
-  grid-template-columns:repeat(2,1fr);
-  gap:14px;
-}
+  .product-grid{
+    gap:14px;
+  }
 
-/* smaller cards */
+  .product-card{
+    padding:14px 10px;
+    border-radius:16px;
+  }
 
-.product-card{
-  padding:14px 10px;
-  border-radius:16px;
-}
+  .product-image{
+    width:95px;
+    height:95px;
+  }
 
-/* smaller image */
+  .wishlist{
+    top:8px;
+    right:8px;
+    font-size:16px;
+  }
 
-.product-image{
-  width:95px;
-  height:95px;
-}
+  .product-info h4{
+    font-size:12px;
+  }
 
-/* wishlist icon */
+  .product-info p{
+    font-size:12px;
+  }
 
-.wishlist{
-  top:8px;
-  right:8px;
-  font-size:16px;
-}
-
-/* product text */
-
-.product-info h4{
-  font-size:12px;
-}
-
-.product-info p{
-  font-size:12px;
-}
-
-/* title */
-
-.category-title{
-  font-size:18px;
-  margin-bottom:18px;
-}
-
+  .category-title{
+    font-size:18px;
+    margin-bottom:18px;
+  }
 }
