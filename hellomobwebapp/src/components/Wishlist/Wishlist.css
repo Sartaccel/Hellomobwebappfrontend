@@ -1,6 +1,9 @@
+/* ================= CONTAINER ================= */
+
 .wishlist-container{
   min-height:100vh;
-  padding:60px 80px;
+
+  padding:clamp(30px,5vw,60px) clamp(16px,6vw,80px);
 
   background: linear-gradient(
     135deg,
@@ -8,26 +11,38 @@
     #173d6b 40%,
     #3d63a3 100%
   );
+
+  padding-bottom:50px;
 }
+
+/* ================= TITLE ================= */
 
 .wishlist-title{
   color:white;
-  font-size:28px;
-  margin-bottom:40px;
+  font-size:clamp(22px,3vw,28px);
+  margin-bottom:clamp(20px,4vw,40px);
+  font-weight:600;
 }
 
-/* grid */
+/* ================= GRID ================= */
 
 .wishlist-grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:40px;
+
+  gap:clamp(20px,4vw,40px);
+
+  max-width:1400px;
+  margin:auto;
+
+  /* ✅ large screens */
+  grid-template-columns: repeat(5, minmax(0, 1fr));
 }
 
-/* card */
+/* ================= CARD ================= */
 
 .wishlist-card{
-      width:260px;
+  width:100%;
+  margin:auto;
 
   position:relative;
 
@@ -35,67 +50,184 @@
   backdrop-filter: blur(18px);
 
   border-radius:26px;
-  padding:20px;
+  padding:clamp(16px,3vw,20px);
 
   text-align:center;
 
   border:1px solid rgba(255,255,255,0.25);
-
   box-shadow:0 10px 30px rgba(0,0,0,0.35);
+
+  transition:0.3s ease;
 }
 
-/* heart */
+.wishlist-card:hover{
+  transform:translateY(-6px);
+}
+
+/* ================= HEART ================= */
 
 .wishlist-heart{
   position:absolute;
-  top:15px;
-  right:15px;
+  top:12px;
+  right:12px;
+
   cursor:pointer;
   font-size:20px;
+  color:red;
 }
 
-/* image */
+/* ================= IMAGE ================= */
 
 .wishlist-image{
-  width:150px;
-  height:150px;
+  width:clamp(120px,15vw,170px);
+  height:clamp(120px,15vw,170px);
+
   object-fit:cover;
+
+  margin:10px auto;
+
   border-radius:16px;
+
+  filter: drop-shadow(0 10px 12px rgba(0,0,0,0.45));
 }
 
-/* info */
+/* ================= INFO ================= */
 
 .wishlist-info h4{
   color:white;
-  margin-top:10px;
+  margin-top:12px;
+  font-size:clamp(14px,2vw,16px);
 }
 
 .wishlist-info p{
   color:white;
+  font-size:clamp(13px,2vw,15px);
 }
 
-/* button */
+/* ================= BUTTON ================= */
 
 .move-cart-btn{
   margin-top:12px;
-  padding:8px 16px;
+
+  padding:clamp(6px,2vw,10px) clamp(14px,4vw,20px);
+
   border:none;
   border-radius:20px;
 
   background:#007bff;
   color:white;
 
+  font-size:clamp(13px,2vw,15px);
+
   cursor:pointer;
+  transition:0.3s;
 }
 
 .move-cart-btn:hover{
   background:#0056b3;
 }
 
-/* empty */
+/* ================= EMPTY ================= */
 
 .no-products{
-  color:white;
+  grid-column:1 / -1;
   text-align:center;
+  color:white;
+  font-size:clamp(16px,2.5vw,20px);
   margin-top:60px;
+}
+
+/* ================= BREAKPOINTS ================= */
+
+/* 4 cards */
+@media (max-width:1400px){
+  .wishlist-grid{
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* 3 cards */
+@media (max-width:1000px){
+  .wishlist-grid{
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* 2 cards */
+@media (max-width:600px){
+
+  .wishlist-container{
+    padding:30px 16px;
+    padding-bottom:100px;
+
+  }
+
+  .wishlist-grid{
+    grid-template-columns: repeat(2, 1fr);
+    gap:20px;
+  }
+
+  .wishlist-card{
+    padding:18px 12px;
+    border-radius:18px;
+  }
+
+  .wishlist-image{
+    width:120px;
+    height:120px;
+  }
+
+  .wishlist-heart{
+    font-size:18px;
+    top:10px;
+    right:10px;
+  }
+
+  .move-cart-btn{
+    width:80%;
+    max-width:180px;
+  }
+}
+
+/* small mobile */
+@media (max-width:400px){
+
+  .wishlist-container{
+    padding:20px 12px;
+    padding-bottom:70px;
+
+  }
+
+  .wishlist-grid{
+    gap:14px;
+  }
+
+  .wishlist-card{
+    padding:14px 10px;
+    border-radius:16px;
+  }
+
+  .wishlist-image{
+    width:95px;
+    height:95px;
+  }
+
+  .wishlist-info h4{
+    font-size:12px;
+  }
+
+  .wishlist-info p{
+    font-size:12px;
+  }
+
+  .wishlist-heart{
+    font-size:16px;
+    top:8px;
+    right:8px;
+  }
+
+  .move-cart-btn{
+    width:90%;
+    font-size:13px;
+  }
 }

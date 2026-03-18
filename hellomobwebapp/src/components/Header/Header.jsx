@@ -56,17 +56,17 @@ function Header() {
 
       {/* MOBILE BOTTOM NAV */}
       <div className="mobile-nav">
-        <div className="mobile-icon">
+        <Link to="/home"  className="mobile-icon">
           <FaHome />
-        </div>
+        </Link>
 
-        <div className="mobile-icon">
+        <Link to="/wishlist" className="mobile-icon">
           <FaHeart />
-        </div>
+        </Link>
 
-        <div className="mobile-icon">
+        <Link to="/cart" className="mobile-icon">
           <FaShoppingCart />
-        </div>
+        </Link>
 
         <div className="mobile-icon profile-avatar">{initial}</div>
       </div>

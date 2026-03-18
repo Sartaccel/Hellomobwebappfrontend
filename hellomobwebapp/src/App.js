@@ -7,6 +7,8 @@ import Hero from "./components/Hero/Hero"
 import OtpVerification from "./pages/OtpVerification/OtpVerification";
 import CategoryProduct from "./pages/CategoryProduct/CategoryProduct";
 import Wishlist from "./components/Wishlist/Wishlist";
+import ProductDetails from "./pages/ProductDetails/ProductDetails";
+import Cart from "./components/Cart/Cart";
 
 function App() {
   return (
@@ -20,6 +22,8 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/category/:category" element={<CategoryProduct />} />
           <Route path="/wishlist" element={<Wishlist/>}/>
+          <Route path="/cart" element={<Cart/>}/>
+          <Route path="/product/:id" element={<ProductDetails />} />
         </Routes>
     </Router>
 
