@@ -1,233 +1,181 @@
-/* ================= CONTAINER ================= */
-
-.wishlist-container{
-  min-height:100vh;
-
-  padding:clamp(30px,5vw,60px) clamp(16px,6vw,80px);
-
-  background: linear-gradient(
-    135deg,
-    #0b1f3f 0%,
-    #173d6b 40%,
-    #3d63a3 100%
-  );
-
-  padding-bottom:50px;
+/* ═══════════════════════════════════════
+   WISHLIST HEADER
+═══════════════════════════════════════ */
+.wishlist-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 40px;
+  margin-top: 10px;
 }
 
-/* ================= TITLE ================= */
-
-.wishlist-title{
-  color:white;
-  font-size:clamp(22px,3vw,28px);
-  margin-bottom:clamp(20px,4vw,40px);
-  font-weight:600;
+.wishlist-count {
+  color: rgba(255,255,255,0.7);
+  font-size: clamp(13px,2vw,15px);
+  letter-spacing: 0.5px;
 }
 
-/* ================= GRID ================= */
-
-.wishlist-grid{
-  display:grid;
-
-  gap:clamp(20px,4vw,40px);
-
-  max-width:1400px;
-  margin:auto;
-
-  /* ✅ large screens */
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+/* ═══════════════════════════════════════
+   MOVE TO CART BUTTON ON CARD
+═══════════════════════════════════════ */
+.wishlist-move-btn {
+  width: 100%;
+  margin-top: 12px;
+  padding: 9px 0;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 20px;
+  color: white;
+  font-size: clamp(12px,1.8vw,14px);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+.wishlist-move-btn:hover {
+  background: rgba(255,255,255,0.28);
+  border-color: rgba(255,255,255,0.5);
+  transform: translateY(-1px);
+}
+.wishlist-move-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
 }
 
-/* ================= CARD ================= */
+/* ═══════════════════════════════════════
+   TOASTER
+═══════════════════════════════════════ */
+.toaster-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  pointer-events: none;
+}
+.toast {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 260px;
+  max-width: 360px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.13);
+  font-size: 0.88rem;
+  font-weight: 500;
+  pointer-events: all;
+  animation: toastSlideIn 0.3s ease forwards;
+}
+@keyframes toastSlideIn {
+  from { opacity: 0; transform: translateX(60px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+.toast-success { background:#f0fdf4; border:1px solid #86efac; color:#166534; }
+.toast-error   { background:#fff1f2; border:1px solid #fca5a5; color:#991b1b; }
+.toast-warning { background:#fffbeb; border:1px solid #fcd34d; color:#92400e; }
+.toast-info    { background:#eff6ff; border:1px solid #93c5fd; color:#1e40af; }
+.toast-icon    { font-size:1rem; flex-shrink:0; }
+.toast-message { flex:1; line-height:1.4; }
+.toast-close {
+  background:none; border:none; font-size:1.1rem;
+  cursor:pointer; color:inherit; opacity:0.5;
+  padding:0; line-height:1; transition:opacity 0.15s;
+}
+.toast-close:hover { opacity:1; }
 
-.wishlist-card{
-  width:100%;
-  margin:auto;
+/* ═══════════════════════════════════════
+   MODAL OVERLAY
+═══════════════════════════════════════ */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  z-index: 1000;
+  overflow-y: auto;
+  padding: 20px 0;
+  animation: fadeIn 0.2s ease;
+}
+@keyframes fadeIn {
+  from { opacity:0; } to { opacity:1; }
+}
 
-  position:relative;
+/* ═══════════════════════════════════════
+   MODAL CONTENT
+   — same bg as product-details-container
+═══════════════════════════════════════ */
+.modal-content {
+  background: linear-gradient(135deg, #0b1f3f 0%, #173d6b 40%, #3d63a3 100%);
+  border-radius: 24px;
+  width: 94%;
+  max-width: 1100px;
+  position: relative;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.7);
+  animation: slideUp 0.25s ease;
+  color: white;
+  overflow: hidden;
+}
+@keyframes slideUp {
+  from { transform:translateY(40px); opacity:0; }
+  to   { transform:translateY(0);    opacity:1; }
+}
 
+/* close button */
+.modal-close-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 14px;
+  color: white;
+  z-index: 10;
+  transition: background 0.2s;
+}
+.modal-close-btn:hover { background: rgba(255,255,255,0.28); }
+
+/* ── mirrors .review-section ── */
+.modal-review-section {
+  max-width: 100%;
+  width: 100%;
+}
+
+/* ── mirrors .product-details-container ── */
+.modal-product-details-container {
+  display: flex;
+  gap: clamp(20px,5vw,60px);
+  padding: clamp(20px,5vw,60px) clamp(16px,6vw,80px);
+  color: white;
   background: rgba(255,255,255,0.08);
-  backdrop-filter: blur(18px);
-
-  border-radius:26px;
-  padding:clamp(16px,3vw,20px);
-
-  text-align:center;
-
-  border:1px solid rgba(255,255,255,0.25);
-  box-shadow:0 10px 30px rgba(0,0,0,0.35);
-
-  transition:0.3s ease;
+  border-radius: 0px 0px 40px 40px;
 }
 
-.wishlist-card:hover{
-  transform:translateY(-6px);
-}
-
-/* ================= HEART ================= */
-
-.wishlist-heart{
-  position:absolute;
-  top:12px;
-  right:12px;
-
-  cursor:pointer;
-  font-size:20px;
-  color:red;
-}
-
-/* ================= IMAGE ================= */
-
-.wishlist-image{
-  width:clamp(120px,15vw,170px);
-  height:clamp(120px,15vw,170px);
-
-  object-fit:cover;
-
-  margin:10px auto;
-
-  border-radius:16px;
-
-  filter: drop-shadow(0 10px 12px rgba(0,0,0,0.45));
-}
-
-/* ================= INFO ================= */
-
-.wishlist-info h4{
-  color:white;
-  margin-top:12px;
-  font-size:clamp(14px,2vw,16px);
-}
-
-.wishlist-info p{
-  color:white;
-  font-size:clamp(13px,2vw,15px);
-}
-
-/* ================= BUTTON ================= */
-
-.move-cart-btn{
-  margin-top:12px;
-
-  padding:clamp(6px,2vw,10px) clamp(14px,4vw,20px);
-
-  border:none;
-  border-radius:20px;
-
-  background:#007bff;
-  color:white;
-
-  font-size:clamp(13px,2vw,15px);
-
-  cursor:pointer;
-  transition:0.3s;
-}
-
-.move-cart-btn:hover{
-  background:#0056b3;
-}
-
-/* ================= EMPTY ================= */
-
-.no-products{
-  grid-column:1 / -1;
-  text-align:center;
-  color:white;
-  font-size:clamp(16px,2.5vw,20px);
-  margin-top:60px;
-}
-
-/* ================= BREAKPOINTS ================= */
-
-/* 4 cards */
-@media (max-width:1400px){
-  .wishlist-grid{
-    grid-template-columns: repeat(4, 1fr);
+/* ═══════════════════════════════════════
+   RESPONSIVE MODAL
+═══════════════════════════════════════ */
+@media (max-width:900px) {
+  .modal-product-details-container {
+    flex-direction: column;
+    align-items: center;
   }
 }
 
-/* 3 cards */
-@media (max-width:1000px){
-  .wishlist-grid{
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-/* 2 cards */
-@media (max-width:600px){
-
-  .wishlist-container{
-    padding:30px 16px;
-    padding-bottom:100px;
-
-  }
-
-  .wishlist-grid{
-    grid-template-columns: repeat(2, 1fr);
-    gap:20px;
-  }
-
-  .wishlist-card{
-    padding:18px 12px;
-    border-radius:18px;
-  }
-
-  .wishlist-image{
-    width:120px;
-    height:120px;
-  }
-
-  .wishlist-heart{
-    font-size:18px;
-    top:10px;
-    right:10px;
-  }
-
-  .move-cart-btn{
-    width:80%;
-    max-width:180px;
-  }
-}
-
-/* small mobile */
-@media (max-width:400px){
-
-  .wishlist-container{
-    padding:20px 12px;
-    padding-bottom:70px;
-
-  }
-
-  .wishlist-grid{
-    gap:14px;
-  }
-
-  .wishlist-card{
-    padding:14px 10px;
-    border-radius:16px;
-  }
-
-  .wishlist-image{
-    width:95px;
-    height:95px;
-  }
-
-  .wishlist-info h4{
-    font-size:12px;
-  }
-
-  .wishlist-info p{
-    font-size:12px;
-  }
-
-  .wishlist-heart{
-    font-size:16px;
-    top:8px;
-    right:8px;
-  }
-
-  .move-cart-btn{
-    width:90%;
-    font-size:13px;
-  }
+@media (max-width:480px) {
+  .toaster-container { top:12px; right:12px; left:12px; }
+  .toast { min-width:unset; max-width:100%; }
+  .modal-content { width:98%; border-radius:16px; }
 }

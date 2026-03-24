@@ -1,22 +1,21 @@
 import "./CategoryMenu.css";
 
 function CategoryMenu() {
-
   const categories = [
-    "Mobiles",
-    "Accessories",
-    "Gifts",
-    "Watches",
-    "Clocks",
-    "Sweets nuts",
-    "Prefume",
-    "Camera",
-    "Speakers"
+    "MOBILES",
+    "ACCESSORIES",
+    "GIFT",
+    "WATCHES",
+    "CLOCK",
+    "SWEET_NUTS",
+    "PERFUME",
+    "CAMERA",
+    "SPEAKER"
   ];
 
   return (
     <div className="category-menu">
-      {categories.map((cat,index)=>(
+      {categories.map((cat, index) => (
         <span key={index}>{cat} ▼</span>
       ))}
     </div>

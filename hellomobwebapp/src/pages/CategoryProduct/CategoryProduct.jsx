@@ -2,102 +2,99 @@ import React, { useEffect, useState } from "react";
 import "./CategoryProduct.css";
 import { FiHeart } from "react-icons/fi";
 import { FaHeart } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import CategoryNav from "../../components/CategoryNav/CategoryNav";
 import Header from "../../components/Header/Header";
-
-const dummyProducts = [
-  {
-    id: 1,
-    name: "iPhone 17 Pro Max",
-    price: "₹1,49,900",
-    category: "mobiles",
-    imageUrl:
-      "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=300",
-  },
-  {
-    id: 2,
-    name: "Samsung Galaxy S25 Ultra",
-    price: "₹1,29,999",
-    category: "mobiles",
-    imageUrl:
-      "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=300",
-  },
-  {
-    id: 3,
-    name: "Vivo Y20G",
-    price: "₹12,300",
-    category: "mobiles",
-    imageUrl:
-      "https://images.unsplash.com/photo-1580910051074-3eb694886505?w=300",
-  },
-  {
-    id: 4,
-    name: "Apple Watch Ultra",
-    price: "₹79,999",
-    category: "watches",
-    imageUrl:
-      "https://images.unsplash.com/photo-1516574187841-cb9cc2ca948b?w=300",
-  },
-  {
-    id: 5,
-    name: "Noise Smart Watch",
-    price: "₹3,999",
-    category: "watches",
-    imageUrl:
-      "https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=300",
-  },
-  {
-    id: 6,
-    name: "Bluetooth Speaker",
-    price: "₹2,499",
-    category: "speakers",
-    imageUrl:
-      "https://images.unsplash.com/photo-1585386959984-a415522316e2?w=300",
-  },
-];
+import API from "../../api/api";
+import { toast } from "react-toastify";
 
 const CategoryProduct = () => {
-  const navigate = useNavigate();
   const { category } = useParams();
+  const navigate = useNavigate();
+
   const [products, setProducts] = useState([]);
-  const [wishlist, setWishlist] = useState([]);
+  const [wishlist, setWishlist] = useState(new Set());
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [loadingWishlist, setLoadingWishlist] = useState(new Set());
 
-  /* Load wishlist from localStorage */
+  // 📦 Fetch products
   useEffect(() => {
-    const savedWishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
-    setWishlist(savedWishlist);
-  }, []);
+    setLoading(true);
+    setError(null);
 
-  /* Filter products based on category */
-  useEffect(() => {
-    if (category === "all-products") {
-      setProducts(dummyProducts);
-    } else {
-      const filteredProducts = dummyProducts.filter(
-        (product) => product.category === category,
-      );
-      setProducts(filteredProducts);
-    }
+    const url =
+      category === "all-products"
+        ? "/products/all"
+        : `/products/category/${category.toUpperCase()}`;
+
+    API.get(url)
+      .then((res) => setProducts(res.data.data))
+      .catch((err) => {
+        console.error(err);
+        setError("Failed to load products. Please try again.");
+      })
+      .finally(() => setLoading(false));
   }, [category]);
 
-  /* Add / Remove Wishlist */
-  const toggleWishlist = (product) => {
-    const existing = JSON.parse(localStorage.getItem("wishlist")) || [];
+  // ❤️ Fetch wishlist
+  useEffect(() => {
+    API.get("/wishlist")
+      .then((res) => {
+        const ids = new Set(res.data.data.map((item) => item.id));
+        setWishlist(ids);
+      })
+      .catch((err) => console.error("Failed to load wishlist", err));
+  }, []);
 
-    const alreadyAdded = existing.find((item) => item.id === product.id);
+  // 🔁 Toggle wishlist
+  const toggleWishlist = (productId, e) => {
+    e.stopPropagation(); // 🚫 prevent navigation
 
-    let updatedWishlist;
+    if (loadingWishlist.has(productId)) return;
 
-    if (alreadyAdded) {
-      updatedWishlist = existing.filter((item) => item.id !== product.id);
-    } else {
-      updatedWishlist = [...existing, product];
-    }
+    const isWishlisted = wishlist.has(productId);
 
-    localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
-    setWishlist(updatedWishlist);
+    setLoadingWishlist((prev) => new Set(prev).add(productId));
+
+    // Optimistic update
+    setWishlist((prev) => {
+      const updated = new Set(prev);
+      isWishlisted ? updated.delete(productId) : updated.add(productId);
+      return updated;
+    });
+
+    const request = isWishlisted
+      ? API.delete(`/wishlist/remove/${productId}`)
+      : API.post(`/wishlist/add/${productId}`);
+
+    request
+      .then(() => {
+        toast.success(
+          isWishlisted
+            ? "Removed from wishlist"
+            : "Added to wishlist"
+        );
+      })
+      .catch((err) => {
+        console.error(err);
+
+        // revert
+        setWishlist((prev) => {
+          const reverted = new Set(prev);
+          isWishlisted ? reverted.add(productId) : reverted.delete(productId);
+          return reverted;
+        });
+
+        toast.error("Wishlist update failed");
+      })
+      .finally(() => {
+        setLoadingWishlist((prev) => {
+          const updated = new Set(prev);
+          updated.delete(productId);
+          return updated;
+        });
+      });
   };
 
   return (
@@ -106,6 +103,7 @@ const CategoryProduct = () => {
       <CategoryNav />
 
       <div className="category-container">
+
         <h2 className="category-title">
           {category
             ?.split("-")
@@ -113,46 +111,54 @@ const CategoryProduct = () => {
             .join(" ")}
         </h2>
 
-        <div className="product-grid">
-          {products.length > 0 ? (
-            products.map((product) => {
-              const isWishlisted = wishlist.some(
-                (item) => item.id === product.id,
-              );
+        {loading && <p className="status-message">Loading products...</p>}
+        {error && <p className="status-message error">{error}</p>}
 
-              return (
-                <div
-                  className="product-card"
-                  key={product.id}
-                  onClick={() =>
-                    navigate(`/product/${product.id}`, { state: product })
-                  }
-                >
-                  {" "}
-                  <div
-                    className="wishlist"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      toggleWishlist(product);
-                    }}
-                  >
-                    {isWishlisted ? <FaHeart color="red" /> : <FiHeart />}
-                  </div>
-                  <img
-                    src={product.imageUrl}
-                    alt={product.name}
-                    className="product-image"
-                  />
-                  <div className="product-info">
-                    <h4>{product.name}</h4>
-                    <p>{product.price}</p>
-                  </div>
-                </div>
-              );
-            })
-          ) : (
-            <p className="no-products">No products found</p>
-          )}
+        {!loading && !error && products.length === 0 && (
+          <p className="status-message">
+            No products found in "{category}"
+          </p>
+        )}
+
+        <div className="product-grid">
+          {products.map((product) => (
+            <div
+              className="product-card"
+              key={product.id}
+              onClick={() =>
+                navigate(`/product/${product.id}`, { state: product })
+              }
+            >
+
+              {/* ❤️ Wishlist */}
+              <div
+                className={`wishlist ${
+                  wishlist.has(product.id) ? "wishlisted" : ""
+                }`}
+                onClick={(e) => toggleWishlist(product.id, e)}
+              >
+                {wishlist.has(product.id) ? (
+                  <FaHeart color="red" size={18} />
+                ) : (
+                  <FiHeart size={18} />
+                )}
+              </div>
+
+              {/* 🖼 Image */}
+              <img
+                src={product.imageUrl}
+                alt={product.productName}
+                className="product-image"
+              />
+
+              {/* 📦 Info */}
+              <div className="product-info">
+                <h4>{product.productName}</h4>
+                <p>₹{product.salesPrice}</p>
+              </div>
+
+            </div>
+          ))}
         </div>
       </div>
     </>

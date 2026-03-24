@@ -4,15 +4,15 @@ import { NavLink } from "react-router-dom";
 
 const categories = [
   { name: "Show All", path: "all-products" },
-  { name: "Mobiles", path: "mobiles" },
-  { name: "Accessories", path: "accessories" },
-  { name: "Gifts", path: "gifts" },
-  { name: "Watches", path: "watches" },
-  { name: "Clocks", path: "clocks" },
-  { name: "Sweets nuts", path: "sweets-nuts" },
-  { name: "Perfume", path: "perfume" },
-  { name: "Camera", path: "camera" },
-  { name: "Speakers", path: "speakers" }
+  { name: "Mobiles", path: "MOBILES" },
+  { name: "Accessories", path: "ACCESSORIES" },
+  { name: "Gifts", path: "GIFT" },
+  { name: "Watches", path: "WATCHES" },
+  { name: "Clocks", path: "CLOCK" },
+  { name: "Sweets nuts", path: "SWEET_NUTS" },
+  { name: "Perfume", path: "PERFUME" },
+  { name: "Camera", path: "CAMERA" },
+  { name: "Speakers", path: "SPEAKER" }
 ];
 
 function CategoryNav() {
@@ -36,7 +36,6 @@ function CategoryNav() {
 
       {/* Mobile Menu */}
       <div className="mobile-category">
-
         <h2 className="mobile-title">Categories</h2>
 
         <div className="mobile-chip-container">
@@ -52,7 +51,6 @@ function CategoryNav() {
             </NavLink>
           ))}
         </div>
-
       </div>
 
     </div>

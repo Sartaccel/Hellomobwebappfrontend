@@ -4,24 +4,26 @@ import { Link } from "react-router-dom";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 import mobileImg from "../../assets/mobile.png";
-import watchImg from "../../assets/watch.png";
+import sweetnutsImg  from "../../assets/nuts.png"
+import speakerImg from "../../assets/speaker.png"
 import cosmeticImg from "../../assets/cosmetic.png";
 import electronicsImg from "../../assets/electronics.png";
 import toysImg from "../../assets/toys.png";
-import decorImg from "../../assets/decor.png";
-
+// import decorImg from "../../assets/decor.png";
+import cameraImg from "../../assets/camera.png"
+import clockImg from "../../assets/clock.png"
+import watchesImg from "../../assets/watch.png"
 const categories = [
   { name: "Mobiles", path: "mobiles", image: mobileImg },
-  { name: "Watches", path: "watches", image: watchImg },
-  { name: "Cosmetics", path: "cosmetics", image: cosmeticImg },
-  { name: "Electronics", path: "electronics", image: electronicsImg },
-  { name: "Toys", path: "toys", image: toysImg },
-  { name: "Decor", path: "decor", image: decorImg },
-  { name: "Gifts", path: "gifts", image: "https://picsum.photos/200?random=1" },
-  { name: "Clocks", path: "clocks", image: "https://picsum.photos/200?random=2" },
-  { name: "Speakers", path: "speakers", image: "https://picsum.photos/200?random=3" },
-  { name: "Perfumes", path: "perfumes", image: "https://picsum.photos/200?random=4" },
-  { name: "Sweets & Nuts", path: "sweets-nuts", image: "https://picsum.photos/200?random=5" }
+  { name: "Watches", path: "watches", image: watchesImg },
+  { name: "Accessories", path: "ACCESSORIES",image:electronicsImg },
+  { name: "Gifts", path: "GIFT",image:toysImg },
+  { name: "Watches", path: "WATCHES",image:watchesImg},
+  { name: "Clocks", path: "CLOCK",image:clockImg },
+  { name: "Sweets nuts", path: "SWEET_NUTS",image:sweetnutsImg },
+  { name: "Perfume", path: "PERFUME",image:cosmeticImg },
+  { name: "Camera", path: "CAMERA", image:cameraImg},
+  { name: "Speakers", path: "SPEAKER",image:speakerImg }
 ];
 
 function TopCategories() {

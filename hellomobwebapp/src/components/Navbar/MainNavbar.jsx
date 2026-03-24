@@ -30,7 +30,11 @@ const Navbar = () => {
         <div className="navbar-auth">
           <Link to="/register" className="auth-link">
             <FaUserCircle size={22}/>
-            <span>Sign Up / Sign In</span>
+            <span>Sign Up |</span>
+          </Link>
+          <Link to="/Login" className="auth-link">
+            
+            <span>| Sign In</span>
           </Link>
         </div>
       </div>
