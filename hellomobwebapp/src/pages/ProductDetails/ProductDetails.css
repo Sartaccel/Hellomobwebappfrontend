@@ -317,3 +317,272 @@ padding: clamp(20px, 5vw, 60px) clamp(16px, 6vw, 80px);
   }
 
 }
+/* ─── PASTE THIS INTO ProductDetails.css ─── */
+
+/* Stack toasts in top-right corner */
+.toaster-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  pointer-events: none;
+}
+
+/* Base toast */
+.toast {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 260px;
+  max-width: 360px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.13);
+  font-size: 0.88rem;
+  font-weight: 500;
+  pointer-events: all;
+  animation: toastSlideIn 0.3s ease forwards;
+}
+
+@keyframes toastSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(60px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Toast variants */
+.toast-success {
+  background: #f0fdf4;
+  border: 1px solid #86efac;
+  color: #166534;
+}
+
+.toast-error {
+  background: #fff1f2;
+  border: 1px solid #fca5a5;
+  color: #991b1b;
+}
+
+.toast-warning {
+  background: #fffbeb;
+  border: 1px solid #fcd34d;
+  color: #92400e;
+}
+
+.toast-info {
+  background: #eff6ff;
+  border: 1px solid #93c5fd;
+  color: #1e40af;
+}
+
+/* Icon */
+.toast-icon {
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+/* Message */
+.toast-message {
+  flex: 1;
+  line-height: 1.4;
+}
+
+/* Close button */
+.toast-close {
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+  color: inherit;
+  opacity: 0.5;
+  padding: 0;
+  line-height: 1;
+  flex-shrink: 0;
+  transition: opacity 0.15s;
+}
+
+.toast-close:hover {
+  opacity: 1;
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .toaster-container {
+    top: 12px;
+    right: 12px;
+    left: 12px;
+  }
+
+  .toast {
+    min-width: unset;
+    max-width: 100%;
+  }
+}/* ─── ADD THESE STYLES TO YOUR ProductDetails.css ─── */
+
+/* Review header layout */
+.review-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.review-header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.review-date {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+/* Action button group */
+.review-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* Shared action button base */
+.review-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 12px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease, box-shadow 0.18s ease;
+  white-space: nowrap;
+}
+
+/* Edit button */
+.edit-btn {
+  background: #f0f4ff;
+  color: #3b6be8;
+  border-color: #c9d8fb;
+}
+
+.edit-btn:hover {
+  background: #3b6be8;
+  color: #fff;
+  border-color: #3b6be8;
+  box-shadow: 0 2px 8px rgba(59, 107, 232, 0.25);
+}
+
+/* Delete button */
+.delete-btn {
+  background: #fff3f3;
+  color: #e03e3e;
+  border-color: #f7c5c5;
+}
+
+.delete-btn:hover {
+  background: #e03e3e;
+  color: #fff;
+  border-color: #e03e3e;
+  box-shadow: 0 2px 8px rgba(224, 62, 62, 0.22);
+}
+
+/* Save button */
+.save-btn {
+  background: #eafaf2;
+  color: #1a8a4a;
+  border-color: #a3dfc0;
+}
+
+.save-btn:hover {
+  background: #1a8a4a;
+  color: #fff;
+  border-color: #1a8a4a;
+  box-shadow: 0 2px 8px rgba(26, 138, 74, 0.22);
+}
+
+/* Cancel button */
+.cancel-btn {
+  background: #f5f5f5;
+  color: #555;
+  border-color: #ddd;
+}
+
+.cancel-btn:hover {
+  background: #e0e0e0;
+  border-color: #bbb;
+}
+
+/* Confirm delete button */
+.confirm-delete-btn {
+  background: #e03e3e;
+  color: #fff;
+  border-color: #e03e3e;
+}
+
+.confirm-delete-btn:hover {
+  background: #c12c2c;
+  border-color: #c12c2c;
+  box-shadow: 0 2px 8px rgba(193, 44, 44, 0.3);
+}
+
+/* ─── Inline Edit Form ─── */
+.review-edit-form {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.review-edit-form textarea {
+  width: 100%;
+  min-height: 80px;
+  padding: 10px 12px;
+  border: 1px solid #d8dde6;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+}
+
+.review-edit-form textarea:focus {
+  border-color: #3b6be8;
+}
+
+.edit-form-actions {
+  display: flex;
+  gap: 10px;
+}
+
+/* ─── Delete Confirmation ─── */
+.delete-confirm {
+  margin-top: 10px;
+  padding: 14px 16px;
+  background: #fff8f8;
+  border: 1px solid #f7c5c5;
+  border-radius: 10px;
+}
+
+.delete-confirm p {
+  margin: 0 0 12px;
+  font-size: 0.88rem;
+  color: #c0392b;
+  font-weight: 500;
+}
+
+.delete-confirm-actions {
+  display: flex;
+  gap: 10px;
+}

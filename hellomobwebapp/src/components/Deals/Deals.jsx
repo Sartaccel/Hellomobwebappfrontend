@@ -14,12 +14,23 @@ function Deals() {
 
       const response = await fetch("http://localhost:8080/api/products/deals");
 
-      const data = await response.json();
+      const result = await response.json();
 
-      setDealItems(data);
+      console.log("API Response:", result);
+
+      // If backend returns {status, message, data}
+      if (result && Array.isArray(result.data)) {
+        setDealItems(result.data);
+      } else if (Array.isArray(result)) {
+        // If backend returns array directly
+        setDealItems(result);
+      } else {
+        setDealItems([]);
+      }
 
     } catch (error) {
       console.error("Error fetching deals:", error);
+      setDealItems([]);
     }
   };
 
@@ -35,20 +46,32 @@ function Deals() {
         </div>
 
         <div className="deals-scroll-container">
-          {dealItems.map((item) => (
-            <div key={item.id} className="deal-card">
 
-              <div className="deal-image-container">
-                <img src={item.imageUrl} alt={item.name} />
+          {dealItems.length > 0 ? (
+            dealItems.map((item) => (
+              <div key={item.id} className="deal-card">
+
+                <div className="deal-image-container">
+                  <img
+                    src={item.imageUrl}
+                    alt={item.name}
+                    onError={(e) => {
+                      e.target.src = "https://via.placeholder.com/150";
+                    }}
+                  />
+                </div>
+
+                <div className="deal-info">
+                  <p className="deal-name">{item.name}</p>
+                  <p className="deal-price">₹ {item.price}</p>
+                </div>
+
               </div>
+            ))
+          ) : (
+            <p className="no-deals">No deals available</p>
+          )}
 
-              <div className="deal-info">
-                <p className="deal-name">{item.name}</p>
-                <p className="deal-price">₹ {item.price}</p>
-              </div>
-
-            </div>
-          ))}
         </div>
 
         <div className="shop-top-link">

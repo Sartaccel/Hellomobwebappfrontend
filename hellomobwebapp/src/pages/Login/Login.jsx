@@ -5,11 +5,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import logo from "../../assets/logo.png";
 
 const Login = () => {
 
   const navigate = useNavigate();
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -17,88 +17,75 @@ const Login = () => {
     e.preventDefault();
 
     try {
-
       const response = await axios.post(
         "http://localhost:8080/api/auth/login",
-        {
-          email: email,
-          password: password
-        }
+        { email, password }
       );
 
-      console.log(response.data);
+      const token = response.data.data;  // ✅ correct path
 
-      // store JWT token
-      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("token", token);  // ✅ saves real token
 
-toast.success("Login successful");
-      // redirect after login
+      toast.success("Login successful");
       navigate("/home");
 
     } catch (error) {
-
       console.error(error);
-
-toast.error("Invalid email or password");
+      toast.error("Invalid email or password");
     }
   };
 
   return (
     <>
-    <div className="login-page">
+      <div className="login-page">
+        <div className="bg-shape shape-top-right"></div>
+        <div className="bg-shape shape-bottom-left-1"></div>
+        <div className="bg-shape shape-bottom-left-2"></div>
+        <div className="bg-shape shape-bottom-left-3"></div>
 
-      <div className="bg-shape shape-top-right"></div>
-      <div className="bg-shape shape-bottom-left-1"></div>
-      <div className="bg-shape shape-bottom-left-2"></div>
-      <div className="bg-shape shape-bottom-left-3"></div>
-
-      <div className="login-content">
-
-        <div className="login-header">
-          <h1>hello</h1>
-          <p>FUTURE STORE</p>
-        </div>
-
-        <form className="login-form" onSubmit={handleSubmit}>
-
-          <div className="input-container">
-            <FiUser className="input-icon" />
-            <input 
-              type="email"
-              placeholder="EMAIL"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
+        <div className="login-content">
+          <div className="login-header">
+            <img src={logo} alt="logoimg" className="logo-image" width={250} />
           </div>
 
-          <div className="input-container">
-            <FiLock className="input-icon" />
-            <input 
-              type="password"
-              placeholder="PASSWORD"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
+          <form className="login-form" onSubmit={handleSubmit}>
+            <div className="input-container">
+              <FiUser className="input-icon" />
+              <input
+                type="email"
+                placeholder="EMAIL"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
+
+            <div className="input-container">
+              <FiLock className="input-icon" />
+              <input
+                type="password"
+                placeholder="PASSWORD"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                className="input-box"
+              />
+            </div>
+
+            <button type="submit" className="login-btn">
+              LOGIN
+            </button>
+          </form>
+
+          <div className="forgot-password-container">
+            <Link to="/forgot-password" className="forgot-password">
+              Forgot password?
+            </Link>
           </div>
-
-          <button type="submit" className="login-btn">
-            LOGIN
-          </button>
-
-        </form>
-
-        <div className="forgot-password-container">
-          <Link to="/forgot-password" className="forgot-password">
-            Forgot password?
-          </Link>
         </div>
-
       </div>
-    </div>
-        <ToastContainer position="top-right" autoClose={3000} />
-</>
+      <ToastContainer position="top-right" autoClose={3000} />
+    </>
   );
 };
 

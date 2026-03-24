@@ -5,7 +5,8 @@ import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import registerImage from "../../assets/register.png";
+import  logo from "../../assets/logo.png"
 const CreateAccount = () => {
 
     const navigate = useNavigate();
@@ -55,92 +56,98 @@ toast.error("Registration failed. Please try again.");
     <div className="create-account-container">
 
       <header className="brand-header">
-        <h1>hello</h1>
-        <p>FUTURE STORE</p>
+        <img src={logo} alt="logoimg" className="logo-image" width={300}></img>
       </header>
 
-      <main className="form-wrapper">
-        <h2>Create account</h2>
+      <div className="split-layout">
 
-        <form className="account-form" onSubmit={handleRegister}>
+        {/* Left side — image */}
+        <div className="split-left">
+          <img src={registerImage} alt="Register visual" className="register-image" />
+        </div>
 
-          <div className="form-row">
-            <div className="input-group">
-              <label>First name</label>
-              <input
-                type="text"
-                name="firstName"
-                onChange={handleChange}
-              />
-            </div>
+        {/* Right side — form */}
+        <div className="split-right">
+          <main className="form-wrapper">
+            <h2>Create account</h2>
 
-            <div className="input-group">
-              <label>Last name</label>
-              <input
-                type="text"
-                name="lastName"
-                onChange={handleChange}
-              />
-            </div>
-          </div>
+            <form className="account-form" onSubmit={handleRegister}>
 
-          <div className="form-row">
-            <div className="input-group">
-              <label>Email</label>
-              <input
-                type="email"
-                name="email"
-                onChange={handleChange}
-              />
-            </div>
+              <div className="form-row">
+                <div className="input-group">
+                  <label>First name</label>
+                  <input
+                    type="text"
+                    name="firstName"
+                    onChange={handleChange}
+                  />
+                </div>
 
-            <div className="input-group">
-              <label>Phone number</label>
-              <input
-                type="tel"
-                name="phoneNumber"
-                onChange={handleChange}
-              />
-            </div>
-          </div>
+                <div className="input-group">
+                  <label>Last name</label>
+                  <input
+                    type="text"
+                    name="lastName"
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
 
-          <div className="form-row">
-            <div className="input-group">
-              <label>Password</label>
-              <input
-                type="password"
-                name="password"
-                onChange={handleChange}
-              />
-            </div>
+              <div className="form-row">
+                <div className="input-group">
+                  <label>Email</label>
+                  <input
+                    type="email"
+                    name="email"
+                    onChange={handleChange}
+                  />
+                </div>
 
-            <div className="input-group">
-              <label>Confirm password</label>
-              <input
-                type="password"
-                name="confirmPassword"
-                onChange={handleChange}
-              />
-            </div>
-          </div>
+                <div className="input-group">
+                  <label>Phone number</label>
+                  <input
+                    type="tel"
+                    name="phoneNumber"
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
 
-          <div className="action-buttons">
-            <button type="submit" className="btn-primary">
-              Create account
-            </button>
+              <div className="form-row">
+                <div className="input-group">
+                  <label>Password</label>
+                  <input
+                    type="password"
+                    name="password"
+                    onChange={handleChange}
+                  />
+                </div>
 
-            <button type="button" className="btn-secondary">
-              <FcGoogle className="google-icon" />
-              Sign-in with google
-            </button>
-          </div>
+                <div className="input-group">
+                  <label>Confirm password</label>
+                  <input
+                    type="password"
+                    name="confirmPassword"
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
 
-          <div className="login-prompt">
-            Already have an account? <a href="/login">Log In</a>
-          </div>
+              <div className="action-buttons">
+                <button type="submit" className="btn-primary">
+                  Create account
+                </button>
+              </div>
 
-        </form>
-      </main>
+              <div className="login-prompt">
+                Already have an account? <a href="/login">Log In</a>
+              </div>
+
+            </form>
+          </main>
+        </div>
+
+      </div>
     </div>
         <ToastContainer
       position="top-right"

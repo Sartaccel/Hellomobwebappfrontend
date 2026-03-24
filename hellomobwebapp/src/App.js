@@ -9,7 +9,7 @@ import CategoryProduct from "./pages/CategoryProduct/CategoryProduct";
 import Wishlist from "./components/Wishlist/Wishlist";
 import ProductDetails from "./pages/ProductDetails/ProductDetails";
 import Cart from "./components/Cart/Cart";
-
+import ForgotPassword from "./pages/Login/forgot-password";
 function App() {
   return (
     <Router>
@@ -24,6 +24,7 @@ function App() {
           <Route path="/wishlist" element={<Wishlist/>}/>
           <Route path="/cart" element={<Cart/>}/>
           <Route path="/product/:id" element={<ProductDetails />} />
+          <Route path="/forgot-password" element={<ForgotPassword/>}/>
         </Routes>
     </Router>
 
