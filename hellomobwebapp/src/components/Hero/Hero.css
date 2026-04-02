@@ -1,24 +1,46 @@
 /* =========================
-   HOME
+   HOME (FULL SCREEN FIX)
 ========================= */
 
-.home{
-  min-height:100vh;
+.home {
+  min-height: 90vh;
+  overflow: visible;
+  background: linear-gradient(135deg, #001f3f, #003366, #004080);
+  color: white;
 }
+.btn-secondary {
+  background: transparent;
+  color: #ffffff;
 
+  padding: 14px 30px;
 
+  border: 2px solid #4cc4c4;
+  border-radius: 30px;
+
+  font-size: 16px;
+  font-weight: 600;
+
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  letter-spacing: 0.5px;
+}
+.btn-secondary:hover {
+  color: black;
+}
 /* =========================
    HERO CONTAINER
 ========================= */
 
-.hero{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
+.hero {
+  height: calc(100vh - 80px); /* subtract navbar height */
 
-  padding:clamp(40px,8vw,80px) clamp(20px,6vw,100px);
-  gap:40px;
-  flex-wrap:wrap;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 clamp(20px, 6vw, 100px);
+  gap: 40px;
 }
 
 
@@ -26,33 +48,32 @@
    HERO LEFT
 ========================= */
 
-.hero-left{
-  max-width:520px;
-  flex:1;
+.hero-left {
+  flex: 1;
+  min-width: 300px;
 }
 
-.hero-left h1{
-  font-size:clamp(32px,4vw,60px);
-  font-weight:700;
-  line-height:1.2;
+.hero-left h1 {
+  font-size: clamp(40px, 5vw, 70px);
+  font-weight: 800;
+  line-height: 1.1;
 }
 
-.hero-left span{
-  font-weight:800;
+.hero-left span {
+  color: #4cc4c4;
 }
 
-.hero-left h3{
-  font-size:clamp(16px,1.6vw,22px);
-  margin-top:18px;
+.hero-left h3 {
+  font-size: clamp(18px, 2vw, 26px);
+  margin-top: 20px;
+  color: #d6e1ef;
 }
 
-.hero-left p{
-  margin-top:15px;
-  font-size:clamp(14px,1.2vw,18px);
-  line-height:1.6;
-  color:#d6e1ef;
-  font-weight: lighter;
-
+.hero-left p {
+  margin-top: 18px;
+  font-size: clamp(16px, 1.4vw, 20px);
+  line-height: 1.6;
+  color: #cfd9e6;
 }
 
 
@@ -60,49 +81,62 @@
    BUTTONS
 ========================= */
 
-.hero-buttons{
-  margin-top:30px;
-  display:flex;
-  gap:20px;
-  flex-wrap:wrap;
+.hero-buttons {
+  margin-top: 30px;
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
 }
 
-.btn-primary{
-  background:#4cc4c4;
-  color:#002b4f;
+.btn-primary {
+  background: linear-gradient(135deg, #4cc4c4, #00e6e6);
+  color: #002b4f;
 
-  padding:clamp(10px,1.2vw,14px) clamp(18px,2vw,26px);
+  padding: 14px 30px;
+  border-radius: 30px;
+  border: none;
 
-  border:1px solid white;
-  border-radius:25px;
+  font-weight: 600;
+  font-size: 16px;
 
-  font-size:clamp(14px,1.1vw,16px);
+  cursor: pointer;
+  transition: 0.3s;
 
-  cursor:pointer;
-  transition:0.25s;
+  box-shadow: 0 8px 20px rgba(0, 230, 230, 0.3);
 }
 
-.btn-primary:hover{
-  transform:translateY(-2px);
-  background-color: #d6e1ef;
-  border:1px solid #4cc4c4;
-
+.btn-primary:hover {
+  transform: translateY(-4px);
+  background: white;
 }
 
 
 /* =========================
-   HERO RIGHT IMAGE
+   HERO RIGHT (IMAGE)
 ========================= */
 
-.hero-right{
-  flex:1;
-  display:flex;
-  justify-content:center;
+.hero-right {
+  flex: 1.2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.hero-right img{
-  width:clamp(260px,40vw,550px);
-  height:auto;
+/* FLOAT ANIMATION */
+@keyframes floatUpDown {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+  100% { transform: translateY(0px); }
+}
+
+.hero-right img {
+  width: clamp(350px, 55vw, 750px);
+  max-height: 80vh;
+  height: auto;
+
+  animation: floatUpDown 4s ease-in-out infinite;
+
+  filter: drop-shadow(0 30px 40px rgba(0, 0, 0, 0.5));
 }
 
 
@@ -110,12 +144,20 @@
    TABLET
 ========================= */
 
-@media (max-width:1024px){
+@media (max-width: 1024px) {
 
-  .hero{
-    padding:60px 40px;
+  .hero {
+    height: auto;
+    padding: 60px 40px;
   }
 
+  .hero-left h1 {
+    font-size: 48px;
+  }
+
+  .hero-right img {
+    width: 450px;
+  }
 }
 
 
@@ -123,16 +165,39 @@
    MOBILE
 ========================= */
 
-@media (max-width:768px){
+@media (max-width: 768px) {
 
-  .hero{
-    flex-direction:column;
-    text-align:center;
-    padding:50px 25px;
+  .home {
+    height: auto;
+    overflow: visible;
   }
 
-  .hero-buttons{
-    justify-content:center;
+  .hero {
+    height: auto;
+    flex-direction: column;
+    text-align: center;
+    padding: 40px 20px;
   }
 
+  .hero-left h1 {
+    font-size: 34px;
+  }
+
+  .hero-left h3 {
+    font-size: 18px;
+  }
+
+  .hero-left p {
+    font-size: 15px;
+  }
+
+  .hero-buttons {
+    justify-content: center;
+  }
+
+  .hero-right img {
+    width: 90%;
+    max-width: 400px;
+    max-height: 300px;
+  }
 }

@@ -152,7 +152,7 @@ function ProductDetails() {
       fetchReviews();
       showToast("Review submitted successfully!", "success");
     } catch {
-      showToast("Failed to submit review. Try again.", "error");
+      showToast("Only one review.", "error");
     }
   };
 
@@ -255,11 +255,12 @@ function ProductDetails() {
           <div className="product-right">
             <h2 className="product-title">{product.productName}</h2>
 
-            <div className="rating">
-              ⭐⭐⭐⭐☆ <span>4.5</span>
-            </div>
+            
 
-            <h3 className="price">₹{product.salesPrice}</h3>
+            <h3 className="price">
+  <span className="discount-price">₹{product.discountPrice}</span>
+  ₹{product.productPrice}
+</h3>
 
             <div className="description">
               <h4>Description</h4>
@@ -278,7 +279,7 @@ function ProductDetails() {
               <button className="add-cart-btn" onClick={handleAddToCart}>
                 Add to Cart
               </button>
-              <button className="buy-now-btn">Buy Now</button>
+              {/* <button className="buy-now-btn">Buy Now</button> */}
             </div>
           </div>
         </div>
@@ -351,7 +352,7 @@ function ProductDetails() {
                               <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
                               <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
                             </svg>
-                            Edit
+                            
                           </button>
                           <button
                             className="review-action-btn delete-btn"
@@ -364,7 +365,7 @@ function ProductDetails() {
                               <path d="M10 11v6M14 11v6"/>
                               <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
                             </svg>
-                            Delete
+                            
                           </button>
                         </div>
                       )}

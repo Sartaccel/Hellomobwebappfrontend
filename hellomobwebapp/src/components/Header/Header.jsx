@@ -3,7 +3,7 @@ import {
   FaHeart,
   FaShoppingCart,
   FaHome,
-  FaSearch,
+  // FaSearch,
 } from "react-icons/fa";
 import logo from "../../assets/logo.png";
 import { Link, useNavigate } from "react-router-dom";
@@ -49,14 +49,14 @@ function Header() {
         </div>
 
         {/* SEARCH */}
-        <div className="search-box">
+        {/* <div className="search-box">
           <FaSearch className="search-icon" />
           <input type="text" placeholder="Search" />
-        </div>
+        </div> */}
 
         {/* DESKTOP MENU */}
         <div className="menu-right">
-          <Link to="/home" className="icon">
+          <Link to="/" className="icon">
             <FaHome />
             <span className="text">Home</span>
           </Link>

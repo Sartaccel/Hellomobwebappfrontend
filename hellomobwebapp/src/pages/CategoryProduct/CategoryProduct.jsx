@@ -154,7 +154,7 @@ const CategoryProduct = () => {
               {/* 📦 Info */}
               <div className="product-info">
                 <h4>{product.productName}</h4>
-                <p>₹{product.salesPrice}</p>
+                <p>₹{product.productPrice}</p>
               </div>
 
             </div>

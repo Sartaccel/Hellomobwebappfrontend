@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Cart.css";
 import Header from "../Header/Header";
 import CategoryNav from "../CategoryNav/CategoryNav";
@@ -47,20 +48,40 @@ function useToast() {
 /* ─────────────────────────────────────────
    CART COMPONENT
 ───────────────────────────────────────── */
-function Cart() {
-  const [cartItems, setCartItems] = useState([]);
-  const [savedItems, setSavedItems] = useState([]);
-  const [loading, setLoading]     = useState(true);
 
+// ✅ Key for localStorage persistence
+const SAVED_ITEMS_KEY = "cart_saved_items";
+
+function Cart() {
+  const [cartItems, setCartItems]   = useState([]);
+  const [savedItems, setSavedItems] = useState(() => {
+    // ✅ Load saved items from localStorage on first render
+    try {
+      const stored = localStorage.getItem(SAVED_ITEMS_KEY);
+      return stored ? JSON.parse(stored) : [];
+    } catch {
+      return [];
+    }
+  });
+  const [loading, setLoading]   = useState(true);
+  const [ordering, setOrdering] = useState(false);
+
+  const navigate = useNavigate();
   const { toasts, showToast, removeToast } = useToast();
 
   const token = localStorage.getItem("token");
+  const authHeaders = { headers: { Authorization: `Bearer ${token}` } };
 
-  const authHeaders = {
-    headers: { Authorization: `Bearer ${token}` },
-  };
+  // ✅ Persist savedItems to localStorage whenever it changes
+  useEffect(() => {
+    try {
+      localStorage.setItem(SAVED_ITEMS_KEY, JSON.stringify(savedItems));
+    } catch {
+      // storage full or unavailable
+    }
+  }, [savedItems]);
 
-  // ─── Fetch cart from backend ───────────────────────────────────────────────
+  // ─── Fetch cart from backend ─────────────────────────────────────────────
   const fetchCart = useCallback(async () => {
     if (!token) {
       showToast("Please login to view your cart", "warning");
@@ -70,14 +91,8 @@ function Cart() {
     try {
       setLoading(true);
       const res = await API.get("/cart", authHeaders);
+      const rawItems = res.data;
 
-      // Backend returns: [{ id, userId, productId, quantity }]
-      // We need product details — fetch each product or rely on what's stored.
-      // Enrich with product details from localStorage / ProductDetails navigation state,
-      // or fetch individually if needed.
-      const rawItems = res.data; // [{ id, userId, productId, quantity }]
-
-      // Try to enrich: fetch product details for each cartItem
       const enriched = await Promise.all(
         rawItems.map(async (item) => {
           try {
@@ -87,19 +102,20 @@ function Cart() {
               cartId:    item.id,
               productId: item.productId,
               name:      product.productName  || "Product",
-              price:     product.salesPrice   || 0,
+              price:     product.productPrice || 0,
               image:     product.imageUrl     || "https://via.placeholder.com/100",
+              category:  product.productCategory || "",   // ✅ include category
               qty:       item.quantity,
               selected:  true,
             };
           } catch {
-            // Fallback if product fetch fails
             return {
               cartId:    item.id,
               productId: item.productId,
               name:      `Product #${item.productId}`,
               price:     0,
               image:     "https://via.placeholder.com/100",
+              category:  "",
               qty:       item.quantity,
               selected:  true,
             };
@@ -108,7 +124,7 @@ function Cart() {
       );
 
       setCartItems(enriched);
-    } catch (err) {
+    } catch {
       showToast("Failed to load cart", "error");
     } finally {
       setLoading(false);
@@ -119,7 +135,7 @@ function Cart() {
     fetchCart();
   }, [fetchCart]);
 
-  // ─── Toggle checkbox (local only — no backend call needed) ────────────────
+  // ─── Toggle checkbox ──────────────────────────────────────────────────────
   const toggleSelect = (productId) => {
     setCartItems((items) =>
       items.map((item) =>
@@ -132,15 +148,9 @@ function Cart() {
   const increaseQty = async (item) => {
     const newQty = item.qty + 1;
     try {
-      await API.put(
-        `/cart/update/${item.productId}?qty=${newQty}`,
-        {},
-        authHeaders
-      );
+      await API.put(`/cart/update/${item.productId}?qty=${newQty}`, {}, authHeaders);
       setCartItems((items) =>
-        items.map((i) =>
-          i.productId === item.productId ? { ...i, qty: newQty } : i
-        )
+        items.map((i) => i.productId === item.productId ? { ...i, qty: newQty } : i)
       );
     } catch {
       showToast("Failed to update quantity", "error");
@@ -152,15 +162,9 @@ function Cart() {
     if (item.qty <= 1) return;
     const newQty = item.qty - 1;
     try {
-      await API.put(
-        `/cart/update/${item.productId}?qty=${newQty}`,
-        {},
-        authHeaders
-      );
+      await API.put(`/cart/update/${item.productId}?qty=${newQty}`, {}, authHeaders);
       setCartItems((items) =>
-        items.map((i) =>
-          i.productId === item.productId ? { ...i, qty: newQty } : i
-        )
+        items.map((i) => i.productId === item.productId ? { ...i, qty: newQty } : i)
       );
     } catch {
       showToast("Failed to update quantity", "error");
@@ -178,12 +182,16 @@ function Cart() {
     }
   };
 
-  // ─── Save for later (remove from backend cart, keep locally in savedItems) ─
+  // ─── Save for later ───────────────────────────────────────────────────────
   const saveForLater = async (item) => {
     try {
       await API.delete(`/cart/remove/${item.productId}`, authHeaders);
       setCartItems((items) => items.filter((i) => i.productId !== item.productId));
-      setSavedItems((prev) => [...prev, item]);
+      // ✅ Avoid duplicates in savedItems
+      setSavedItems((prev) => {
+        const exists = prev.find((i) => i.productId === item.productId);
+        return exists ? prev : [...prev, item];
+      });
       showToast("Saved for later", "info");
     } catch {
       showToast("Failed to save for later", "error");
@@ -194,14 +202,10 @@ function Cart() {
   const moveToCart = async (item) => {
     try {
       await API.post(`/cart/add/${item.productId}`, {}, authHeaders);
-      // Update quantity if it was more than 1
       if (item.qty > 1) {
-        await API.put(
-          `/cart/update/${item.productId}?qty=${item.qty}`,
-          {},
-          authHeaders
-        );
+        await API.put(`/cart/update/${item.productId}?qty=${item.qty}`, {}, authHeaders);
       }
+      // ✅ Remove from localStorage-backed savedItems
       setSavedItems((items) => items.filter((i) => i.productId !== item.productId));
       setCartItems((prev) => [...prev, { ...item, selected: true }]);
       showToast("Moved back to cart", "success");
@@ -210,7 +214,55 @@ function Cart() {
     }
   };
 
-  // ─── Subtotal (selected items only) ──────────────────────────────────────
+  // ─── Remove saved item permanently ───────────────────────────────────────
+  const removeSavedItem = (item) => {
+    setSavedItems((items) => items.filter((i) => i.productId !== item.productId));
+    showToast("Removed from saved items", "info");
+  };
+
+  // ─── Proceed to Buy ───────────────────────────────────────────────────────
+  const handleProceedToBuy = async () => {
+    if (selectedCount === 0) {
+      showToast("Please select at least one item", "warning");
+      return;
+    }
+
+    try {
+      setOrdering(true);
+
+      const orderRes = await API.post("/order/create", {}, authHeaders);
+      const order = orderRes.data;
+
+      // ✅ Pass full selected items to Payment page for product name display
+      const selectedItems = cartItems
+        .filter((item) => item.selected)
+        .map((item) => ({
+          productId:    item.productId,
+          name:         item.name,
+          category:     item.category,
+          price:        item.price,
+          quantity:     item.qty,
+          image:        item.image,
+        }));
+
+      navigate("/payment", {
+        state: {
+          orderId:   order.id,
+          amount:    order.amount,
+          itemCount: selectedCount,
+          items:     selectedItems,   // ✅ Now Payment page can show product names
+        },
+      });
+
+    } catch (err) {
+      const msg = err.response?.data?.message || "Failed to create order";
+      showToast(msg, "error");
+    } finally {
+      setOrdering(false);
+    }
+  };
+
+  // ─── Subtotal ─────────────────────────────────────────────────────────────
   const subtotal = cartItems
     .filter((item) => item.selected)
     .reduce((acc, item) => acc + item.price * item.qty, 0);
@@ -235,10 +287,12 @@ function Cart() {
           <p className="cart-empty">Your cart is empty.</p>
         ) : (
           <div className="cart-main">
-            {/* LEFT */}
+
+            {/* ── LEFT ── */}
             <div className="cart-left-section">
               {cartItems.map((item) => (
                 <div className="cart-row" key={item.productId}>
+
                   {/* CHECKBOX */}
                   <input
                     type="checkbox"
@@ -262,32 +316,26 @@ function Cart() {
                         <span>{item.qty}</span>
                         <button onClick={() => increaseQty(item)}>+</button>
                       </div>
-
-                      <button
-                        onClick={() => removeItem(item)}
-                        className="link-btn"
-                      >
+                      <button onClick={() => removeItem(item)} className="link-btn">
                         Delete
                       </button>
-
-                      <button
-                        onClick={() => saveForLater(item)}
-                        className="link-btn"
-                      >
+                      <button onClick={() => saveForLater(item)} className="link-btn">
                         Save for later
                       </button>
                     </div>
                   </div>
 
                   {/* PRICE */}
-                  <div className="cart-price">₹{(item.price * item.qty).toLocaleString()}</div>
+                  <div className="cart-price">
+                    ₹{(item.price * item.qty).toLocaleString()}
+                  </div>
                 </div>
               ))}
 
-              {/* SAVED ITEMS */}
+              {/* ── SAVED FOR LATER ── */}
               {savedItems.length > 0 && (
                 <div className="saved-section">
-                  <h3>Saved for later</h3>
+                  <h3>Saved for later ({savedItems.length})</h3>
 
                   {savedItems.map((item) => (
                     <div className="cart-row" key={item.productId}>
@@ -297,29 +345,44 @@ function Cart() {
 
                       <div className="cart-details">
                         <h4>{item.name}</h4>
-                        <button
-                          onClick={() => moveToCart(item)}
-                          className="link-btn"
-                        >
-                          Move to cart
-                        </button>
+                        <p className="cart-price-small">
+                          ₹{item.price.toLocaleString()}
+                        </p>
+                        <div className="cart-actions">
+                          <button onClick={() => moveToCart(item)} className="link-btn">
+                            Move to cart
+                          </button>
+                          {/* ✅ Remove saved item button */}
+                          <button onClick={() => removeSavedItem(item)} className="link-btn">
+                            Remove
+                          </button>
+                        </div>
                       </div>
 
-                      <div className="cart-price">₹{item.price.toLocaleString()}</div>
+                      <div className="cart-price">
+                        ₹{item.price.toLocaleString()}
+                      </div>
                     </div>
                   ))}
                 </div>
               )}
             </div>
 
-            {/* RIGHT — Summary */}
+            {/* ── RIGHT — Summary ── */}
             <div className="cart-summary-box">
               <p className="subtotal-text">
                 Subtotal ({selectedCount} item{selectedCount !== 1 ? "s" : ""}):{" "}
                 <strong>₹{subtotal.toLocaleString()}</strong>
               </p>
-              <button className="checkout-btn">Proceed to Buy</button>
+              <button
+                className="checkout-btn"
+                onClick={handleProceedToBuy}
+                disabled={ordering || selectedCount === 0}
+              >
+                {ordering ? "Creating Order..." : "Proceed to Buy"}
+              </button>
             </div>
+
           </div>
         )}
       </div>

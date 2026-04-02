@@ -79,9 +79,21 @@
 
 .description ul{
   margin-top:10px;
+  list-style-type: none;
   font-size:clamp(14px,2vw,16px);
 }
 
+.discount-price {
+  text-decoration: line-through;
+  color: #c81d1d;
+  margin-right: 8px;
+  font-size: 30px;
+}
+.price {
+  font-size: 30px;
+  font-weight: 600;
+  color: #000; /* main price */
+}
 /* ================= BUTTONS ================= */
 
 .buttons{
@@ -471,9 +483,9 @@ padding: clamp(20px, 5vw, 60px) clamp(16px, 6vw, 80px);
 
 /* Edit button */
 .edit-btn {
-  background: #f0f4ff;
+  
   color: #3b6be8;
-  border-color: #c9d8fb;
+  
 }
 
 .edit-btn:hover {
