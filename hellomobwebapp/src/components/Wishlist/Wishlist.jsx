@@ -185,7 +185,7 @@ function ProductDetailModal({ product, onClose, onAddToCart, onRemove, isRemovin
 
               <div className="rating">⭐⭐⭐⭐☆ <span>4.5</span></div>
 
-              <h3 className="price">₹{product.salesPrice?.toLocaleString()}</h3>
+              <h3 className="price">₹{product.productPrice?.toLocaleString()}</h3>
 
               <div className="description">
                 <h4>Description</h4>
@@ -403,7 +403,7 @@ function Wishlist() {
     removeFromWishlist(product.id);
   }, [token]);
 
-  const totalValue = wishlist.reduce((acc, p) => acc + (p.salesPrice || 0), 0);
+  const totalValue = wishlist.reduce((acc, p) => acc + (p.productPrice || 0), 0);
 
   return (
     <>
@@ -459,7 +459,7 @@ function Wishlist() {
                 {/* Info */}
                 <div className="product-info">
                   <h4>{product.productName}</h4>
-                  <p>₹{product.salesPrice?.toLocaleString()}</p>
+                  <p>₹{product.productPrice?.toLocaleString()}</p>
                 </div>
 
                 {/* Move to cart */}

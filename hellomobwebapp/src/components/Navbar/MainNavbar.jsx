@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { FaUserCircle, FaBars, FaTimes } from "react-icons/fa";
+import { FaBars, FaTimes } from "react-icons/fa";
+import { FiUser, FiLogIn } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
 import logo from "../../assets/logo.png";
@@ -10,31 +11,34 @@ const Navbar = () => {
   return (
     <nav className="navbar">
 
+      {/* LOGO */}
       <div className="navbar-brand">
         <Link to="/" className="brand-link">
-          <img src={logo} alt="Hello Futurestore Logo" className="brand-logo" />
+          <img src={logo} alt="Hello Mobiles Logo" className="brand-logo" />
         </Link>
       </div>
 
-      {/* Toggle Button */}
+      {/* TOGGLE BUTTON */}
       <div className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)}>
-        {menuOpen ? <FaTimes size={22}/> : <FaBars size={22}/>}
+        {menuOpen ? <FaTimes size={22} /> : <FaBars size={22} />}
       </div>
 
-      {/* Links */}
+      {/* NAV LINKS */}
       <div className={`navbar-links ${menuOpen ? "active" : ""}`}>
-        <Link to="/Home" className="nav-link">Home</Link>
-        <Link to="/category/:category" className="nav-link">Our Products</Link>
+        <Link to="/home" className="nav-link">Home</Link>
+        <Link to="/" className="nav-link">Our Products</Link>
         <Link to="/contact" className="nav-link">Contact Us</Link>
 
+        {/* AUTH */}
         <div className="navbar-auth">
           <Link to="/register" className="auth-link">
-            <FaUserCircle size={22}/>
-            <span>Sign Up |</span>
+            <FiUser size={16} />
+            <span>Sign Up</span>
           </Link>
-          <Link to="/Login" className="auth-link">
-            
-            <span>| Sign In</span>
+
+          <Link to="/login" className="auth-link">
+            <FiLogIn size={16} />
+            <span>Sign In</span>
           </Link>
         </div>
       </div>

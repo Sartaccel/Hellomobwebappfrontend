@@ -2,124 +2,155 @@
    NAVBAR CONTAINER
 ========================= */
 
-.navbar{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:clamp(14px,2vw,22px) clamp(20px,6vw,100px);
-  font-family:'Inria Serif', serif;
-  position:relative;
-  background:#09193a;
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: clamp(14px, 2vw, 22px) clamp(20px, 6vw, 100px);
+
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  background: linear-gradient(135deg, #001f3f, #004080 #003366);
+  backdrop-filter: blur(10px);
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
+
 
 /* =========================
    LOGO
 ========================= */
 
-.brand-logo{
-  height:clamp(34px,3vw,42px);
-  width:auto;
-  object-fit:contain;
+.brand-logo {
+  height: clamp(45px, 4vw, 60px); /* bigger logo */
+  width: auto;
+  object-fit: contain;
 }
 
-.brand-link{
-  display:flex;
-  align-items:center;
+.brand-link {
+  display: flex;
+  align-items: center;
 }
+
 
 /* =========================
    NAV LINKS
 ========================= */
 
-.navbar-links{
-  display:flex;
-  align-items:center;
-  gap:clamp(20px,3vw,40px);
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: clamp(20px, 3vw, 40px);
 }
 
-.nav-link{
-  font-size:clamp(14px,1.1vw,18px);
-  font-weight:500;
-  text-decoration:none;
-  color:#ffffff;
-  transition:0.2s;
+.nav-link {
+  position: relative;
+  font-size: clamp(14px, 1.1vw, 18px);
+  font-weight: 500;
+  text-decoration: none;
+  color: #ffffff;
+  transition: 0.3s;
 }
 
-.nav-link:hover{
-  color:#2a5db0;
+/* underline animation */
+.nav-link::after {
+  content: "";
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  left: 0;
+  bottom: -5px;
+  background: #4cc4c4;
+  transition: 0.3s;
 }
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
 
 /* =========================
    AUTH SECTION
 ========================= */
 
-.navbar-auth{
-  display:flex;
-  align-items:center;
+.navbar-auth {
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 
-.auth-link{
-  display:flex;
-  align-items:center;
-  gap:6px;
-  font-size:clamp(14px,1.1vw,18px);
-  text-decoration:none;
-  color:#ffffff;
+.auth-link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  font-size: 15px;
+  text-decoration: none;
+  color: #ffffff;
+
+  transition: 0.3s;
 }
+
+.auth-link:hover {
+  color: #4cc4c4;
+}
+
 
 /* =========================
    TOGGLE BUTTON
 ========================= */
 
-.menu-toggle{
-  display:none;
-  cursor:pointer;
+.menu-toggle {
+  display: none;
+  cursor: pointer;
+  color: white;
 }
+
 
 /* =========================
    MOBILE DESIGN
 ========================= */
 
-@media (max-width:768px){
+@media (max-width: 768px) {
 
-  .menu-toggle{
-    display:block;
-    position:absolute;
-    right:20px;
-    top:22px;
+  .menu-toggle {
+    display: block;
+    position: absolute;
+    right: 20px;
+    top: 20px;
   }
 
-  .navbar-links{
-    position:absolute;
-    top:100%;
-    left:0;
-    width:100%;
+  .navbar-links {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
 
-    flex-direction:column;
-    align-items:center;
+    flex-direction: column;
+    align-items: center;
 
-    gap:22px;
-    padding:25px 0;
+    gap: 22px;
+    padding: 25px 0;
 
-    background:#fff;
+    background: #ffffff;
 
-    box-shadow:0 8px 20px rgba(0,0,0,0.08);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
 
-    display:none;
+    display: none;
   }
 
-  .navbar-links.active{
-    display:flex;
+  .navbar-links.active {
+    display: flex;
   }
 
-  .navbar-auth{
-    margin-top:10px;
+  .nav-link {
+    color: #060b2f;
   }
-  .auth-link{
- color:#060b2f;
-}
-.nav-link{
-  color:#060b2f;
-}
 
+  .auth-link {
+    color: #060b2f;
+  }
 }

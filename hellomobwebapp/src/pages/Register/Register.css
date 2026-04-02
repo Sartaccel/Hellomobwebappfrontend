@@ -7,7 +7,8 @@
   justify-content: center;
   align-items: center;
   overflow: hidden;
-  background-color: #121f3d;
+    background: linear-gradient(135deg, #001f3f, #003366, #004080);
+
 }
 
 .bg-shape {
@@ -108,7 +109,7 @@
 
 .register-image {
   width: 100%;
-  max-width: 100%;
+  max-width: 87%;
   height: auto;
   object-fit: contain;
   border-radius: 12px;
@@ -119,6 +120,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  background: linear-gradient(135deg, #004080,#003366,#001f3f);
+
 }
 /* ── End split layout ── */
 
@@ -140,6 +143,7 @@
 .account-form {
   display: flex;
   flex-direction: column;
+
   gap: 20px;
 }
 
@@ -158,12 +162,13 @@
 .input-group label {
   font-size: 16px;
   color: #c9d3e8;
+  
   font-weight: 400;
 }
 
 .input-group input {
   padding: 12px 14px;
-  background-color: rgba(30, 43, 77, 0.6);
+  background-color: transparent;
   border: 1px solid #3b507d;
   border-radius: 6px;
   color: white;
